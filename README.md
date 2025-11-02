@@ -5,3 +5,6 @@ En esta actividad tuvimos la oportunidad de experimentar el uso de modelos exter
 
 ### Limitaciones
 No implementamos modelos locales debido a que nuestras máquinas no cumplen con los requerimientos. 
+
+### Reflexión
+El uso de transformers en una aplicación realmente nos amplia mucho las posibilidades en cuanto a funcionalidades que antes podrían ser muy difíciles o imposibles. Personalmente, utilicé un modelo para generar frases de ejemplo en una aplicación de aprendizaje de idiomas. Tarea que resultaría muy difícil si tuviera que hacerlo sin usar un modelo de lenguaje por ejemplo.
