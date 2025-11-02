@@ -80,18 +80,20 @@ def process_text(model, task, text, number_of_words=None):
     end_time = time.time()
     elapsed = round(end_time - start_time, 2)
 
+    with open("output.txt", "w") as f:
+        f.write(f"output: {output}\n")
+
     # Registar run en MLflow
-    mlflow.start_run()
-    mlflow.set_tag("model_type", task)
-    mlflow.log_param("model", model)
-    mlflow.log_param("task", task)
-    mlflow.log_param("text", text)
-    mlflow.log_param("Number of words", number_of_words)
-    mlflow.log_param("text_length", len(text) if text else 0)
-    mlflow.log_metric("response_time_seconds", elapsed)
-    mlflow.log_metric("output_length", len(output) if output else 0)
-    mlflow.log_outputs({"output": output})
-    mlflow.end_run()
+    with mlflow.start_run():
+        mlflow.set_tag("model_type", task)
+        mlflow.log_param("model", model)
+        mlflow.log_param("task", task)
+        mlflow.log_param("text", text)
+        mlflow.log_param("Number of words", number_of_words)
+        mlflow.log_param("text_length", len(text) if text else 0)
+        mlflow.log_metric("response_time_seconds", elapsed)
+        mlflow.log_metric("output_length", len(output) if output else 0)
+        mlflow.log_artifact("output.txt")
 
     yield output, f'{elapsed}s', prompt_view
 
