@@ -156,5 +156,6 @@ with gr.Blocks(css=css) as demo:
 
 
 if __name__ == "__main__":
+    mlflow.set_tracking_uri("http://mlflow:5000")  
     mlflow.set_experiment("llm-chat")
-    demo.launch()
+    demo.launch(server_name="0.0.0.0", server_port=7860)
