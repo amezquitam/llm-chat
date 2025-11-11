@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7860:7861"
+    env_file:
+      - .env
+    depends_on:
+      - mlflow
+  
+  mlflow:
+    image: mlflow
+    ports:
+      - "5000:5001"
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    command: mlflow server --host
