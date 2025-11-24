@@ -1,1 +1,48 @@
-ser
+
+services:
+  app:
+    image: llm-chat
+    ports:
+      - target: 7860
+        published: 7861
+        mode: host
+    env_file:
+      - .env
+    depends_on:
+      - mlflow
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "3G"
+        reservations:
+          cpus: "0.5"
+          memory: "1.5G"
+
+  mlflow:
+    image: mlflow
+    ports:
+      - target: 5000
+        published: 5001
+        mode: host
+    environment:
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    command: mlflow ui --port 5000 --allowed-hosts='*' --host 0.0.0.0
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "2G"
+        reservations:
+          cpus: "0.25"
+          memory: "1G"
+
+networks:
+  default:
+    driver: overlay
